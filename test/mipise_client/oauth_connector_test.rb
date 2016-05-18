@@ -18,7 +18,7 @@ module MipiseClient
 
     should "#authorization_url should create the relevant url" do
 
-      authorization_url = "#{MipiseClient.api_platform_base}/v1/oauth/authorize?client_id=#{@client_id}&redirect_uri=#{Utils.url_encode(@redirect_uri)}&response_type=code&role=payment_partner_beneficiary&scope=payment_platform_mipise&state=#{@state}"
+      authorization_url = "#{MipiseClient.api_platform_base}/api/v1/oauth/authorize?client_id=#{@client_id}&redirect_uri=#{Utils.url_encode(@redirect_uri)}&response_type=code&role=payment_partner_beneficiary&scope=payment_platform_mipise&state=#{@state}"
 
       assert MipiseClient::OauthConnector.authorization_url(@params) == authorization_url
     end
