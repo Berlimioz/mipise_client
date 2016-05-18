@@ -1,3 +1,4 @@
+require 'rest-client'
 require 'socket'
 require 'json'
 #require 'set'
@@ -8,16 +9,14 @@ require 'mipise_client/charge'
 require 'mipise_client/oauth_connector'
 
 module MipiseClient
-  @api_platform_base = "http://metalabo.mipise-staging.com/api"
   @api_version = "v1"
   @verify_ssl_certs = true
   @ca_store = nil
-
   @open_timeout = 30
   @read_timeout = 80
 
   class << self
-    attr_accessor :api_key, :api_version, :api_platform_base, :verify_ssl_certs, :ca_store, :open_timeout, :read_timeout
+    attr_accessor :api_key, :client_id, :api_version, :api_platform_base, :verify_ssl_certs, :ca_store, :open_timeout, :read_timeout
   end
 
   def self.endpoint_api_url(endpoint)
@@ -31,7 +30,7 @@ module MipiseClient
   end
 
   def self.api_url(url='', api_base_url: nil)
-    (api_base_url || @api_platform_base) + "/#{@api_version}" + url
+    (api_base_url || @api_platform_base) + "/api/#{@api_version}" + url
   end
 
   def self.request(method, url, api_key, params: {}, headers: {}, api_base_url: nil)
@@ -98,7 +97,7 @@ module MipiseClient
 
   def self.request_headers(api_key, method)
     headers = {
-      :user_agent => "Mipise/v1 RubyBindings/#{MipiseClient::VERSION}",
+      #:user_agent => "Mipise/v1 RubyBindings/#{MipiseClient::VERSION}",
       :authorization => "Bearer #{api_key}",
       :content_type => 'application/x-www-form-urlencoded'
     }
